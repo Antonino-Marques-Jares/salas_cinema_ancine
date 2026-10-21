@@ -28,15 +28,15 @@ Execute no terminal o comando abaixo para fazer as instalações nescessárias
 pip install -r requirements.txt
 
 # Passo 3
-Crie pasta 'videos' no projeto
+Crie pasta 'videos' e 'json' no projeto
 
-Será a pasta de destino para os vídeos criados
+Obs.: ancine.json guarda metadados que será utilizado no site para atualizar informações na pagina (https://www.areadetrampo.com.br/salas-de-cinema-da-ancine-ativas-no-brasil-entre-2014-e-2025/)
 
 # Passo 4
 
 Execute
 
-python ancine.py
+python etl_atualizar_ancine_no_site.py
 
 # Passo 5
 Verifique os vídeos na pasta videos

@@ -38,6 +38,9 @@ Execute
 
 python ancine.py
 
+# Passo 5
+Verifique os vídeos na pasta videos
+
 
 
 

@@ -11,7 +11,7 @@ Antonino Marques Jares
 21/10/2026
 
 # salas_cinema_ancine
-Animações sobre quantidade de salas de cinema da ANCINE ativas por Estado ou Região entre menor ano (2014) à ano mais atual constante em json da ancine
+Animações sobre quantidade de salas de cinema da ANCINE ativas por Estado ou Região entre menor ano (2014) ao ano mais atual constante em json da ancine
 
 # Passo 1
 Clone o projeto do GitHub

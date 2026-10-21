@@ -15,7 +15,11 @@ Animações sobre quantidade de salas de cinema da ANCINE ativas por Estado ou R
 
 # Passo 1
 Clone o projeto do GitHub
+No terminal verifique em que diretório você está, ao executar o comando :
+
 git clone https://github.com/Antonino-Marques-Jares/salas_cinema_ancine.git
+
+o projeto será criado neste diretório
 
 # Passo 2
 Execute no terminal o comando abaixo para fazer as instalações nescessárias

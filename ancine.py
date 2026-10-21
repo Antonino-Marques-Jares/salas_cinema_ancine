@@ -7,7 +7,9 @@ Fonte: https://dados.ancine.gov.br/dados-abertos/salas-de-exibicao-evolucao-anua
 """
 
 import os
+import json
 import warnings
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -28,11 +30,13 @@ import bar_chart_race as bcr  # importar DEPOIS da config do ffmpeg
 warnings.filterwarnings("ignore")
 
 # ============================================================
-# Configuração da pasta de saída dos vídeos
+# Configuração das pastas de saída
 # ============================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VIDEOS_DIR = os.path.join(BASE_DIR, "videos")
+JSON_DIR = os.path.join(BASE_DIR, "json")
 os.makedirs(VIDEOS_DIR, exist_ok=True)
+os.makedirs(JSON_DIR, exist_ok=True)
 
 
 def carregar_dados(url: str) -> pd.DataFrame:
@@ -130,12 +134,42 @@ def gerar_pivot_regiao(df_estado: pd.DataFrame) -> pd.DataFrame:
     return df_pivot
 
 
+def gerar_json_ancine() -> str:
+    """
+    Gera o arquivo json/ancine.json contendo APENAS os metadados.
+    O campo 'dados' fica vazio ([]).
+    Retorna o caminho do arquivo criado.
+    """
+    caminho_json = os.path.join(JSON_DIR, "ancine.json")
+
+    # Data atual no formato ISO (YYYY-MM-DD)
+    data_atual = datetime.now().strftime("%Y-%m-%d")
+
+    conteudo = {
+        "metadados": {
+            "data_de_atualizacao": data_atual,
+            "responsavel": "Antonino Marques Jares",
+            "nome_programa": "etl_atualizar_ancine_no_site.py",
+        },
+        "dados": [],
+    }
+
+    with open(caminho_json, "w", encoding="utf-8") as f:
+        json.dump(conteudo, f, ensure_ascii=False, indent=2)
+
+    print(f"JSON gerado -> {caminho_json}")
+    return caminho_json
+
+
 def main():
     url = "https://dados.ancine.gov.br/dados-abertos/salas-de-exibicao-evolucao-anual.json"
 
     print("Baixando e tratando dados da ANCINE...")
     df = carregar_dados(url)
     df_modelo = tratar_dados(df)
+
+    # ---------- Gera o JSON apenas com metadados ----------
+    gerar_json_ancine()
 
     # ---------- Intervalo de anos dinâmico ----------
     ano_min, ano_max = obter_intervalo_anos(df_modelo)
@@ -173,6 +207,7 @@ def main():
     )
 
     print("\nConcluído! Vídeos salvos em:", VIDEOS_DIR)
+    print("JSON salvo em:", JSON_DIR)
 
 
 if __name__ == "__main__":
